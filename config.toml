@@ -1,0 +1,101 @@
+baseURL = "https://wiserfz.github.io/"
+languageCode = "en-us"
+title = "wiser"
+theme = "PaperMod"
+copyright = "© 2024 MyWebsite. All rights reserved."
+
+enableInlineShortcodes = true
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+enableEmoji = true
+pygmentsUseClasses = true
+mainsections = ["posts"]
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[params]
+env = "production"
+defaultTheme = "auto"
+ShowBreadCrumbs = true
+ShowReadingTime = true
+ShowPostNavLinks = true
+ShowToc = false
+ShowCodeCopyButtons = false
+ShowShareButtons = false
+ShowRssButtonInSectionTermList = false
+hideFooter = true
+
+[params.author]
+name = "Wiser Feng"
+email  = "wiserfz810@gmail.com"
+
+[params.editPost]
+URL = "https://github.com/wiserfz/my-plog/blob/main/content"
+Text = "Suggest Changes"
+appendFilePath = true
+
+[params.profileMode]
+enabled = false
+
+[params.homeInfoParams]
+Title = "wiser"
+Content = "👋 Welcome to my plog! I'm wiser, a develop engineer who loves to learn and share knowledge."
+
+[[params.socialIcons]]
+name = "rss"
+title = "Subscribe to my RSS feed"
+url = "https://wiserfz.github.io/index.xml"
+
+[[params.socialIcons]]
+name = "email"
+title = "Touch me via Email"
+url = "mailto:wiserfz810@gmail.com"
+
+[[params.socialIcons]]
+name = "github"
+title = "My GitHub"
+url = "https://github.com/wiserfz"
+
+[params.assets]
+disableHLJS = true
+favicon = "/img/favicons/favicon.ico"
+favicon16x16 = "/img/favicons/favicon-16x16.png"
+favicon32x32 = "/img/favicons/favicon-32x32.png"
+apple_touch_icon = "/img/favicons/apple-touch-icon.png"
+safari_pinned_tab = "/img/favicons/favicon.svg"
+
+[params.cover]
+linkFullImages = true
+
+[markup.highlight]
+codeFences = true
+guessSyntax = true
+lineNos = false
+style = "monokai"
+
+[[menu.main]]
+identifier = "categories"
+name = "Categories"
+url = "/categories/"
+weight = 5
+
+[[menu.main]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
+weight = 10
+
+[[menu.main]]
+identifier = "search"
+name = "Search"
+url = "/search/"
+weight = 15
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "about/"
+weight = 20
