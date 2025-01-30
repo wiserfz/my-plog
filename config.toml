@@ -11,6 +11,7 @@ buildFuture = false
 buildExpired = false
 enableEmoji = true
 pygmentsUseClasses = true
+hasCJKLanguage = true
 mainsections = ["posts"]
 
 [outputs]
@@ -69,10 +70,18 @@ safari_pinned_tab = "/img/favicons/favicon.svg"
 
 [params.cover]
 linkFullImages = true
+hidden = true # hide everywhere but not in structured data
+hiddenInList = true # hide on list pages and home
+hiddenInSingle = false # show on single page
+
+[markup.goldmark.renderer]
+unsafe = true
 
 [markup.highlight]
+disableHLJS = true
 codeFences = true
 guessSyntax = true
+noClasses = false
 lineNos = false
 style = "monokai"
 
