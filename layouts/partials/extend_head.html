@@ -1,6 +1,7 @@
 {{ if .Page.Store.Get "hasMermaid" }}
 <!-- WARN: mermaid@11 not rendered at safair 16 see: https://github.com/mermaid-js/mermaid/issues/5523 -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script> -->
+<script src="../../js/mermaid.min.js"></script>
 <script>
   const elementCode = ".mermaid";
   const loadMermaid = function (theme) {
