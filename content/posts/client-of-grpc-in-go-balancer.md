@@ -19,31 +19,31 @@ ShowWordCount = true
 
 ```mermaid
 sequenceDiagram
-	participant ccrw as ccResolverWrapper
-	participant cc as ClinetConn
-	participant ccbw as ccBalancerWrapper
-	participant Balancer
-	participant pfb as pickfirstBuilder
-	participant pf as pickfirstBalancer
-	participant bw as balancerWrapper
-	participant acbw as acBalancerWrapper
-	participant pw as pickerWrapper
-	participant ac as addrConn
+    participant ccrw as ccResolverWrapper
+    participant cc as ClinetConn
+    participant ccbw as ccBalancerWrapper
+    participant Balancer
+    participant pfb as pickfirstBuilder
+    participant pf as pickfirstBalancer
+    participant bw as balancerWrapper
+    participant acbw as acBalancerWrapper
+    participant pw as pickerWrapper
+    participant ac as addrConn
 
-	autonumber
-	ccrw->>cc: updateResolverStateAndUnlock(...)
-	cc->>ccbw: updateClientConnState(...)
-	ccbw->>Balancer: UpdateClientConnState(...)
-	Balancer->>Balancer: switchTo(...)
-	Balancer->>pfb: balancer.Builder.Build(...)
-	Balancer->>pf: balancer.Balancer.UpdateClientConnState(...)
-	pf->>bw: balancer.ClientConn.NewSubConn(...)
-	bw->>ccbw: balancer.ClientConn.NewSubConn(...)
-	pf->>bw: balancer.ClientConn.UpdateState(...)
-	bw->>ccbw: balancer.ClientConn.UpdateState(...)
-	ccbw->>pw: updatePicker(...)
-	pf->>acbw: Connect(...)
-	acbw->>ac: go acbw.ac.connect()<br/>try all addresses to build HTTP2 connection
+    autonumber
+    ccrw->>cc: updateResolverStateAndUnlock(...)
+    cc->>ccbw: updateClientConnState(...)
+    ccbw->>Balancer: UpdateClientConnState(...)
+    Balancer->>Balancer: switchTo(...)
+    Balancer->>pfb: balancer.Builder.Build(...)
+    Balancer->>pf: balancer.Balancer.UpdateClientConnState(...)
+    pf->>bw: balancer.ClientConn.NewSubConn(...)
+    bw->>ccbw: balancer.ClientConn.NewSubConn(...)
+    pf->>bw: balancer.ClientConn.UpdateState(...)
+    bw->>ccbw: balancer.ClientConn.UpdateState(...)
+    ccbw->>pw: updatePicker(...)
+    pf->>acbw: Connect(...)
+    acbw->>ac: go acbw.ac.connect()<br/>try all addresses to build HTTP2 connection
 ```
 
 resolver 解析 target server 地址后，会通过 `ccResolverWrapper` 实现的 `resolver.ClientConn` 接口的 `UpdateState` 方法调用 `ClientConn.updateResolverStateAndUnlock` 方法，该方法会通过解析 `ServiceConfig` 判断使用的 load balance 策略，默认是用 `FirstPick` 策略。
