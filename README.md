@@ -3,60 +3,63 @@ My blog
 
 Responstry for my personal blog site which share information of rust, go and some reading notes.
 
-This blog site build by [Hugo](https://gohugo.io) and use theme with [PaperMod](https://adityatelange.github.io/hugo-PaperMod/).
+This blog site build by [Zola](https://www.getzola.org) and use theme with [apollo](https://not-matthias.github.io/apollo/).
 
 ## Content
 
-Using markdown syntax and support HTML, see Hugo [Content Formats](https://gohugo.io/content-management/formats/) for detail.
+Writing post in content directory, and it's using markdown syntax and support HTML, mermaid and KaTex, and see more explain in [docs](https://www.getzola.org/documentation/content/overview/).
 
 - [Common Markdown](https://commonmark.org)
 - [Mermaid](https://mermaid-js.github.io/)
 - [KaTeX](https://katex.org)
 
-## Writing
-
-Using hugo command crating a new post,
+Create new post with command as follow:
 
 ```bash
-hugo new --kind post content/posts/<name>
+touch ./content/posts/new-post.md
 ```
 
-or create a new markdown file directly.
+## Requirements
 
-### Requirements
-
-- [Hugo](https://gohugo.io)
+- [Zola](https://www.getzola.org)
 
 On macOS and install by brew command:
 
 ```bash
-brew install hugo
+brew install zola
 ```
 
 ### Run
 
 ```bash
-hugo server
+zola serve
 ```
 
-It will listen `:1313` port by default and watching local file change.
+It will listen `:1111` port by default and watching local file change.
 
-Visit blog site by URL: [http://localhost:1313/](http://localhost:1313/)
+Visit blog site by URL: [http://localhost:1111/](http://localhost:1111/)
 
 ### Command
 
 ```bash
-# List all posts
-hugo list all
+$ zola --help
+A fast static site generator with everything built-in
 
-# List all drafts
-hugo list drafts
+Usage: zola [OPTIONS] <COMMAND>
 
-# List all expired posts
-hugo list expired
+Commands:
+  init        Create a new Zola project
+  build       Deletes the output directory if there is one and builds the site
+  serve       Serve the site. Rebuild and reload on change automatically
+  check       Try to build the project without rendering it. Checks links
+  completion  Generate shell completion
+  help        Print this message or the help of the given subcommand(s)
 
-# List all posts dated in the future
-hugo list future
+Options:
+  -r, --root <ROOT>      Directory to use as root of project [default: .]
+  -c, --config <CONFIG>  Path to a config file other than config.toml in the root of project [default: config.toml]
+  -h, --help             Print help
+  -V, --version          Print version
 ```
 
-See other command from hugo docs.
+See CLI usage from [docs](https://www.getzola.org/documentation/getting-started/cli-usage/).

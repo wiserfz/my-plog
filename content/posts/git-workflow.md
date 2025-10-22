@@ -1,12 +1,12 @@
 +++
 title = "git workflow"
-date = "2025-02-01T15:37:55+08:00"
-draft = false
-categories = ["workflow"]
-tags = ["git"]
+date = "2025-02-01"
 author = ["wiser"]
 description = "Some advice for git workflow"
-ShowWordCount = true
+
+[taxonomies]
+tags=["workflow"]
+categories=["git"]
 +++
 
 # Overview
