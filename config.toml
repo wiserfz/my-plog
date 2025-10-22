@@ -1,110 +1,73 @@
-baseURL = "https://wiserfz.github.io/"
-languageCode = "en-us"
-title = "wiser"
-theme = "PaperMod"
-copyright = "© 2024 MyWebsite. All rights reserved."
+# The URL the site will be built for
+base_url = "https://wiserfz.github.io"
 
-enableInlineShortcodes = true
-enableRobotsTXT = true
-buildDrafts = false
-buildFuture = false
-buildExpired = false
-enableEmoji = true
-pygmentsUseClasses = true
-hasCJKLanguage = true
-mainsections = ["posts"]
+# The site title and description; used in feeds by default
+title = "wiser's blog"
+description = "👋 Welcome to my plog! I'm wiser, a software developer who loves to learn and share."
 
-[outputs]
-home = ["HTML", "RSS", "JSON"]
+# The default language; used in feeds
+default_language = "en"
 
-[params]
-env = "production"
-defaultTheme = "auto"
-ShowBreadCrumbs = true
-ShowReadingTime = true
-ShowPostNavLinks = true
-ShowToc = false
-ShowCodeCopyButtons = false
-ShowShareButtons = false
-ShowRssButtonInSectionTermList = false
-hideFooter = true
+# The site theme to use
+theme = "apollo"
 
-[params.author]
-name = "Wiser Feng"
-email  = "wiserfz810@gmail.com"
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
 
-[params.editPost]
-URL = "https://github.com/wiserfz/my-plog/blob/main/content"
-Text = "Suggest Changes"
-appendFilePath = true
+# When set to "true", the generated HTML files are minified
+minify_html = true
 
-[params.profileMode]
-enabled = false
+# When set to "true", a feed is automatically generated
+generate_feeds = true
 
-[params.homeInfoParams]
-Title = "wiser"
-Content = "👋 Welcome to my plog! I'm wiser, a develop engineer who loves to learn and share knowledge."
+# The default author for pages
+author = "wiser"
 
-[[params.socialIcons]]
-name = "rss"
-title = "Subscribe to my RSS feed"
-url = "https://wiserfz.github.io/index.xml"
+# The taxonomies to be rendered for the site and their configuration of the default languages
+taxonomies = [
+    {name = "tags"}, # you can have taxonomies with the same name in multiple languages
+    {name = "categories", paginate_by = 5},  # 5 items per page for a term
+]
 
-[[params.socialIcons]]
-name = "email"
-title = "Touch me via Email"
-url = "mailto:wiserfz810@gmail.com"
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
 
-[[params.socialIcons]]
-name = "github"
-title = "My GitHub"
-url = "https://github.com/wiserfz"
+[search]
+include_title = true
 
-[params.assets]
-disableHLJS = true
+[markdown]
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = true
+
+# Whether external links are to be opened in a new tab
+# If this is true, a `rel="noopener"` will always automatically be added for security reasons
+external_links_target_blank = true
+
+[extra]
+# Whether to enable the table of contents
+toc = true
+# Put all your custom variables here
+theme = "toggle"
+
 favicon = "/img/favicons/favicon.ico"
-favicon16x16 = "/img/favicons/favicon-16x16.png"
-favicon32x32 = "/img/favicons/favicon-32x32.png"
-apple_touch_icon = "/img/favicons/apple-touch-icon.png"
-safari_pinned_tab = "/img/favicons/favicon.svg"
 
-[params.cover]
-linkFullImages = true
-hidden = true # hide everywhere but not in structured data
-hiddenInList = true # hide on list pages and home
-hiddenInSingle = false # show on single page
+# Whether to enable fancy code blocks
+fancy_code = true
 
-[markup.goldmark.renderer]
-unsafe = true
+# Whether to enable MathJax support
+mathjax = true
+mathjax_dollar_inline_enable = true
 
-[markup.highlight]
-disableHLJS = true
-codeFences = true
-guessSyntax = true
-noClasses = false
-lineNos = false
-style = "monokai"
+menu = [
+    { name = "/home", url = "/", weight = 1 },
+    { name = "/posts", url = "/posts", weight = 2 },
+    { name = "/tags", url = "/tags", weight = 99 },
+    { name = "/about", url = "/about", weight = 100 },
+]
 
-[[menu.main]]
-identifier = "categories"
-name = "Categories"
-url = "/categories/"
-weight = 5
-
-[[menu.main]]
-identifier = "tags"
-name = "Tags"
-url = "/tags/"
-weight = 10
-
-[[menu.main]]
-identifier = "search"
-name = "Search"
-url = "/search/"
-weight = 15
-
-[[menu.main]]
-identifier = "about"
-name = "About"
-url = "about/"
-weight = 20
+socials = [
+    # { name = "rss", url = "https://wiserfz.github.io/atom.xml", icon = "rss" },
+    { name = "email", url = "mailto:wiserfz810@gmail.com", icon = "email" },
+    { name = "github", url = "https://github.com/wiserfz/", icon = "github" },
+]

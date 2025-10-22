@@ -1,12 +1,12 @@
 +++
 title = "tower balance"
-date = "2024-12-14T15:48:01+08:00"
-draft = false
-categories = ["rust"]
-tags = ["code", "tower"]
+date = "2024-12-14"
 author = ["wiser"]
-description = "Balance policy in tower crate"
-ShowWordCount = true
+description = "Balance policy in tower crate."
+
+[taxonomies]
+tags=["tower", "code"]
+categories=["rust"]
 +++
 
 ## 前言
@@ -41,10 +41,7 @@ pub trait Service<Request> {
     type Future: Future<Output = Result<Self::Response, Self::Error>>;
 
     // Required methods
-    fn poll_ready(
-        &mut self,
-        cx: &mut Context<'_>,
-    ) -> Poll<Result<(), Self::Error>>;
+    fn poll_ready(&mut self, cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>>;
     fn call(&mut self, req: Request) -> Self::Future;
 }
 ```

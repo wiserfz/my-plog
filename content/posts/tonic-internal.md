@@ -1,12 +1,12 @@
 +++
-title = "client of gRPC in rust -- tonic"
-date = "2024-09-26T16:32:11+08:00"
-categories = ["rust"]
-tags = ["gRPC", "code"]
+title = "tonic internal"
+date = "2024-09-26"
 author = ["wiser"]
-draft = false
-description = "Source code for tonic"
-ShowWordCount = true
+description = "Source code for tonic."
+
+[taxonomies]
+tags=["gRPC", "code"]
+categories=["rust"]
 +++
 
 ## 前言
@@ -128,7 +128,8 @@ where
                         let _ = msg.tx.send(Err(failed.clone()));
                         continue;
                     }
-                    ...
+
+                    // ...
 
                     // 利用 service trait 中 poll_ready 判断底层连接是否正常，是否可以发送数据
                     match self.service.poll_ready(cx) {
@@ -355,9 +356,9 @@ where
 /// A change in the service set.
 #[derive(Debug)]
 pub enum Change<K, V> {
-        /// A new service identified by key `K` was identified.
+    /// A new service identified by key `K` was identified.
     Insert(K, V),
-        /// The service identified by key `K` disappeared.
+    /// The service identified by key `K` disappeared.
     Remove(K),
 }
 ```

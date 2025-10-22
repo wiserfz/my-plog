@@ -1,12 +1,12 @@
 +++
-title = "client of gRPC in go - resolver"
-date = "2024-10-05T14:08:52+08:00"
-draft = false
-categories = ["go"]
-tags = ["gRPC", "code"]
+title = "gRPC go - resolver"
+date = "2024-10-05"
 author = ["wiser"]
-description = "Source code of grpc-go"
-ShowWordCount = true
+description = "Source code of grpc-go."
+
+[taxonomies]
+tags = ["gRPC", "code"]
+categories = ["go"]
 +++
 
 ## 前言
@@ -74,14 +74,14 @@ func NewClient(target string, opts ...DialOption) (conn *ClientConn, err error) 
 		dopts:  defaultDialOptions(),
 	}
 
-    ...
+	// ...
 
 	// Determine the resolver to use.
 	if err := cc.initParsedTargetAndResolverBuilder(); err != nil {
 		return nil, err
 	}
 
-    ...
+	// ...
 
     // 通过解析 json，获取 ServiceConfig 配置
 	if cc.dopts.defaultServiceConfigRawJSON != nil {
@@ -93,7 +93,7 @@ func NewClient(target string, opts ...DialOption) (conn *ClientConn, err error) 
 	}
 	cc.mkp = cc.dopts.copts.KeepaliveParams
 
-    ...
+	// ...
 
 	cc.csMgr = newConnectivityStateManager(cc.ctx, cc.channelz)
 	cc.pickerWrapper = newPickerWrapper(cc.dopts.copts.StatsHandlers)
@@ -113,7 +113,7 @@ func NewClient(target string, opts ...DialOption) (conn *ClientConn, err error) 
 
 ```go
 type ClientConn struct {
-    ...
+	// ...
 
 	target              string            // User's dial target.
 	parsedTarget        resolver.Target   // 通过 target 构造的 URL
@@ -135,7 +135,7 @@ type ClientConn struct {
 	sc              *ServiceConfig             // Latest service config received from the resolver.
 	conns           map[*addrConn]struct{}     // Set to nil on close.
 
-    ...
+	// ...
 }
 ```
 
@@ -266,7 +266,7 @@ type Address struct {
 
 	Attributes *attributes.Attributes
 
-    ...
+	// ...
 }
 ```
 
@@ -324,7 +324,7 @@ func newClientStream(ctx context.Context, desc *StreamDesc, cc *ClientConn, meth
 		return nil, err
 	}
 
-    ...
+	// ...
 
 	return newStream(ctx, func() {})
 }
@@ -349,7 +349,8 @@ type Enforcer interface {
 ```go
 // OnCallBegin is invoked at the start of every RPC.
 func (m *Manager) OnCallBegin() error {
-    ...
+	// ...
+
 	// Channel is either in idle mode or is in the process of moving to idle
 	// mode. Attempt to exit idle mode to allow this RPC.
 	if err := m.ExitIdleMode(); err != nil {
@@ -358,19 +359,20 @@ func (m *Manager) OnCallBegin() error {
 		atomic.AddInt32(&m.activeCallsCount, -1)
 		return err
 	}
-    ...
+
+	// ...
 }
 
 
 func (m *Manager) ExitIdleMode() error {
-    ...
+	// ...
 
     // 退出 idle mode
 	if err := m.enforcer.ExitIdleMode(); err != nil {
 		return fmt.Errorf("failed to exit idle mode: %w", err)
 	}
 
-    ...
+	// ...
 
     // 启动定时器，当定时器超时就会进入 idle mode，
     // 每次检查是否要进入 idle mode 时，就会判断是否有 RPC 调用，
@@ -393,7 +395,7 @@ func (i *idler) ExitIdleMode() error {
 // resolver and load balancer.  This should never be called directly; use
 // cc.idlenessMgr.ExitIdleMode instead.
 func (cc *ClientConn) exitIdleMode() (err error) {
-    ...
+	// ...
 
 	// This needs to be called without cc.mu because this builds a new resolver
 	// which might update state or report error inline, which would then need to

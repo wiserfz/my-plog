@@ -1,12 +1,12 @@
 +++
-title = "client of gRPC in go - balancer"
-date = "2024-10-19T18:16:01+08:00"
-draft = false
-categories = ["go"]
-tags = ["grpc", "code"]
+title = "gRPC go - balancer"
+date = "2024-10-19"
 author = ["wiser"]
-description = "Source code of grpc-go"
-ShowWordCount = true
+description = "Source code of grpc-go."
+
+[taxonomies]
+tags = ["gRPC", "code"]
+categories = ["go"]
 +++
 
 ## 前言
@@ -17,7 +17,7 @@ ShowWordCount = true
 
 ## Balancer
 
-```mermaid
+{% mermaid() %}
 sequenceDiagram
     participant ccrw as ccResolverWrapper
     participant cc as ClinetConn
@@ -44,13 +44,14 @@ sequenceDiagram
     ccbw->>pw: updatePicker(...)
     pf->>acbw: Connect(...)
     acbw->>ac: go acbw.ac.connect()<br/>try all addresses to build HTTP2 connection
-```
+{% end %}
 
 resolver 解析 target server 地址后，会通过 `ccResolverWrapper` 实现的 `resolver.ClientConn` 接口的 `UpdateState` 方法调用 `ClientConn.updateResolverStateAndUnlock` 方法，该方法会通过解析 `ServiceConfig` 判断使用的 load balance 策略，默认是用 `FirstPick` 策略。
 
 ```go
 func (cc *ClientConn) updateResolverStateAndUnlock(s resolver.State, err error) error {
-    ...
+    // ...
+
     // 解析配置，决定 load balance 策略
 	var ret error
 	if cc.dopts.disableServiceConfig {
@@ -135,7 +136,7 @@ func (gsb *Balancer) UpdateClientConnState(state balancer.ClientConnState) error
 
 ```go
 func newClientStream(ctx context.Context, desc *StreamDesc, cc *ClientConn, method string, opts ...CallOption) (_ ClientStream, err error) {
-    ...
+    // ...
 
 	// Provide an opportunity for the first RPC to see the first service config
 	// provided by the resolver.
@@ -149,7 +150,7 @@ func newClientStream(ctx context.Context, desc *StreamDesc, cc *ClientConn, meth
 		return newClientStreamWithParams(ctx, desc, cc, method, mc, onCommit, done, opts...)
 	}
 
-    ...
+    // ...
 
 	return newStream(ctx, func() {})
 }
@@ -161,7 +162,7 @@ func newClientStream(ctx context.Context, desc *StreamDesc, cc *ClientConn, meth
 
 ```go
 func newClientStreamWithParams(ctx context.Context, desc *StreamDesc, cc *ClientConn, method string, mc serviceconfig.MethodConfig, onCommit, doneFunc func(), opts ...CallOption) (_ iresolver.ClientStream, err error) {
-    ...
+    // ...
 
 	cs := &clientStream{
 		callHdr:      callHdr,
@@ -209,7 +210,7 @@ func newClientStreamWithParams(ctx context.Context, desc *StreamDesc, cc *Client
 		return nil, err
 	}
 
-    ...
+    // ...
 
 	return cs, nil
 }

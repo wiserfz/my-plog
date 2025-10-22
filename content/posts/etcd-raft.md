@@ -1,12 +1,12 @@
 +++
 title = "etcd raft"
-date = "2025-04-05T09:57:03+08:00"
-draft = false
-categories = ["go"]
-tags = ["etcd", "raft", "code"]
+date = "2025-04-05"
 author = ["wiser"]
 description = "Source code of etcd and raft"
-ShowWordCount = true
+
+[taxonomies]
+tags = ["etcd", "code"]
+categories = ["go"]
 +++
 
 # 前言
@@ -25,15 +25,15 @@ ShowWordCount = true
 
 ```go
 func NewServer(cfg config.ServerConfig) (srv *EtcdServer, err error) {
-    ...
+	// ...
 
 	haveWAL := wal.Exist(cfg.WALDir())
 
-    ...
+	// ...
 
 	switch {
 	case !haveWAL && !cfg.NewCluster:
-        ...
+		// ...
 
 		remotes = existingCluster.Members()
 		cl.SetID(types.ID(0), existingCluster.ID())
@@ -43,7 +43,7 @@ func NewServer(cfg config.ServerConfig) (srv *EtcdServer, err error) {
 		cl.SetID(id, existingCluster.ID())
 
 	case !haveWAL && cfg.NewCluster:
-        ...
+		// ...
 
 		cl.SetStore(st)
 		cl.SetBackend(be)
@@ -51,7 +51,7 @@ func NewServer(cfg config.ServerConfig) (srv *EtcdServer, err error) {
 		cl.SetID(id, cl.ID())
 
 	case haveWAL:
-        ...
+		// ...
 
 		if !cfg.ForceNewCluster {
 			id, cl, n, s, w = restartNode(cfg, snapshot)
@@ -75,7 +75,7 @@ func NewServer(cfg config.ServerConfig) (srv *EtcdServer, err error) {
 		return nil, fmt.Errorf("cannot access member directory: %v", terr)
 	}
 
-    ....
+	// ...
 
 	return srv, nil
 }
@@ -136,7 +136,7 @@ go func() {
         case <-r.ticker.C:
             r.tick()
         case rd := <-r.Ready():
-            ...
+			// ...
         }
     }
 }
@@ -230,10 +230,10 @@ func StartNode(c *Config, peers []Peer) Node {
 
 ```go
 func (n *node) run() {
-    ...
+	// ...
 
 	for {
-        ...
+		// ...
 
 		select {
 		// TODO: maybe buffer the config propose if there exists one (the way
@@ -253,10 +253,12 @@ func (n *node) run() {
 				r.Step(m)
 			}
 		case cc := <-n.confc:
-            ...
+
+			// ...
 		case <-n.tickc:
 			n.rn.Tick()
-        ...
+
+			// ...
 		case <-n.stop:
 			close(n.done)
 			return
@@ -315,7 +317,7 @@ func (r *raft) tickElection() {
 
 ```go
 func (r *raft) campaign(t CampaignType) {
-    ...
+	// ...
 
 	var term uint64
 	var voteMsg pb.MessageType
@@ -350,7 +352,7 @@ func (r *raft) campaign(t CampaignType) {
 	}
 	for _, id := range ids {
 
-        ...
+		// ...
 
 		r.send(pb.Message{Term: term, To: id, Type: voteMsg, Index: r.raftLog.lastIndex(), LogTerm: r.raftLog.lastTerm(), Context: ctx})
 	}
@@ -374,7 +376,7 @@ func (r *raft) resetRandomizedElectionTimeout() {
 处于其他角色的节点收到 `voteMsg` 消息时，会判断消息的 term 与自身节点的 term，如果比自己大，则会通过 `raft.Step` 方法中的逻辑判断自己是否能够投票，并且是投赞成票还是反对票。
 
 ```go
-....
+	// ...
 
 	case pb.MsgVote, pb.MsgPreVote:
 		// We can vote if this is a repeat of a vote we've already cast...
@@ -394,7 +396,8 @@ func (r *raft) resetRandomizedElectionTimeout() {
 		} else {
 			r.send(pb.Message{To: m.From, Term: r.Term, Type: voteRespMsgType(m.Type), Reject: true})
 		}
-...
+
+	// ...
 
 ```
 
@@ -491,7 +494,7 @@ func stepLeader(r *raft, m pb.Message) error {
 		})
 		return nil
 	case pb.MsgProp:
-        ...
+		// ...
 
 		if !r.appendEntry(m.Entries...) {
 			return ErrProposalDropped
@@ -499,7 +502,7 @@ func stepLeader(r *raft, m pb.Message) error {
 		r.bcastAppend()
 		return nil
 
-        ...
+		// ...
 	}
 
 	// All other message types require a progress for m.From (pr).
@@ -588,7 +591,7 @@ func stepLeader(r *raft, m pb.Message) error {
 				r.send(resp)
 			}
 		}
-    ...
+	// ...
 	}
 	return nil
 }

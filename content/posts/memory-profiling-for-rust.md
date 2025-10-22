@@ -1,12 +1,12 @@
 +++
 title = "memory profiling for rust"
-date = "2024-05-03T15:42:11+08:00"
-draft = false
-categories = ["rust"]
-tags = ["profiling", "heap"]
+date = "2024-05-03"
 author = ["wiser"]
-description = "Rust program memory profiling with heaptrack"
-ShowWordCount = true
+description = "Rust program memory profiling with heaptrack."
+
+[taxonomies]
+tags=["profiling", "heap"]
+categories=["rust"]
 +++
 
 ## Overview

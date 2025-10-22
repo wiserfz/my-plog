@@ -1,12 +1,12 @@
 +++
 title = "etcd watch"
-date = "2025-10-06T18:05:25+08:00"
-draft = false
-categories = ["go"]
-tags = ["etcd", "watch", "code"]
+date = "2025-10-06"
 author = ["wiser"]
-description = "etcd watch"
-ShowWordCount = true
+description = "workflow of go client etcd watch."
+
+[taxonomies]
+tags = ["etcd", "code"]
+categories = ["go"]
 +++
 
 # 前言
@@ -49,7 +49,7 @@ type Client struct {
 	Password        string
 	authTokenBundle credentials.Bundle
 
-	...
+	// ...
 }
 ```
 
@@ -59,7 +59,7 @@ type Client struct {
 
 ## watch 流程
 
-```mermaid
+{% mermaid() %}
 sequenceDiagram
     participant app as application
     participant client as Client
@@ -89,7 +89,7 @@ sequenceDiagram
     watch_client->>watchGrpcStream: receive change event from etcd and send it by `watchGrpcStream.respc` channel
     watchGrpcStream->>watcherStream: dispatch change event by stream id
     watcherStream->>app: send change event by `outc` channel
-```
+{% end %}
 
 ### Client.Watch
 
@@ -102,8 +102,6 @@ sequenceDiagram
 - 当 watch 请求处理完毕，对应的 watch channel 会通过 `WatchRequest.retc` 中传出
 
 ```go
-import "context"
-
 func (w *watcher) Watch(ctx context.Context, key string, opts ...OpOption) WatchChan {
 
 	// ...
@@ -226,12 +224,6 @@ func (w *watchGrpcStream) serveWatchClient(wc pb.Watch_WatchClient) {
 - 从 response channel 中接收 etcd 响应的数据，并通过 `watchGrpcStream.dispatchEvent` 发给专属的 `watcherStream`
 
 ```go
-import (
-	"time"
-
-	"go.uber.org/zap"
-)
-
 func (w *watchGrpcStream) run() {
 	var wc pb.Watch_WatchClient
 	// ..
@@ -375,8 +367,6 @@ func (w *watchGrpcStream) unicastResponse(wr *WatchResponse, watchId int64) bool
 注意到，在初始化 `watcherStream` 时，stream id 为 `InvalidWatchID`，在收到第一个 watch response 时，会更改为 stream id。
 
 ```go
-import "errors"
-
 func (w *watchGrpcStream) addSubstream(resp *pb.WatchResponse, ws *watcherStream) {
 	// check watch ID for backward compatibility (<= v3.3)
 	if resp.WatchId == InvalidWatchID || (resp.Canceled && resp.CancelReason != "") {
@@ -480,7 +470,7 @@ func (w *watchGrpcStream) serveSubstream(ws *watcherStream, resumec chan struct{
 
 对于 rust 代码，增加以下内容解决：
 
-```rust
+```rs
 impl<'a> TryFrom<&'a WatchResponse> for WatchResponseType<'a> {
     type Error = Error;
 

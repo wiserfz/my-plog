@@ -1,12 +1,12 @@
 +++
 title = "etcd auth"
-date = "2025-02-06T10:32:37+08:00"
-draft = false
-categories = ["Operations"]
-tags = ["etcd", "go"]
+date = "2025-02-06"
 author = ["wiser"]
-description = "Enable etcd authentication"
-ShowWordCount = true
+description = "Enable etcd authentication."
+
+[taxonomies]
+tags = ["etcd", "code"]
+categories = ["go"]
 +++
 
 # Overview
@@ -70,7 +70,7 @@ etcdctl auth enable
 
 ```go
 func newClient(cfg *Config) (*Client, error) {
-    ...
+	// ...
 
 	if cfg.Username != "" && cfg.Password != "" {
 		client.Username = cfg.Username
@@ -78,7 +78,7 @@ func newClient(cfg *Config) (*Client, error) {
 		client.authTokenBundle = credentials.NewPerRPCCredentialBundle()
 	}
 
-    ...
+	// ...
 
 	// Use a provided endpoint target so that for https:// without any tls config given, then
 	// grpc will assume the certificate server name is the endpoint host.
@@ -133,7 +133,7 @@ go etcd client 利用 `grpc-go` 中的 Interceptor 机制设置了 unary interce
 func (c *Client) dialSetupOpts(creds grpccredentials.TransportCredentials, dopts ...grpc.DialOption) []grpc.DialOption {
 	var opts []grpc.DialOption
 
-    ...
+	// ...
 
 	// Interceptor retry and backoff.
 	// TODO: Replace all of clientv3/retry.go with RetryPolicy:
@@ -211,14 +211,14 @@ func (c *Client) unaryClientInterceptor(optFuncs ...retryOption) grpc.UnaryClien
 				return err
 			}
 
-            ...
+			// ...
 
 			lastErr = invoker(ctx, method, req, reply, cc, grpcOpts...)
 			if lastErr == nil {
 				return nil
 			}
 
-            ...
+			// ...
 
 			if isContextError(lastErr) {
 				if ctx.Err() != nil {
