@@ -20,6 +20,8 @@ minify_html = true
 # When set to "true", a feed is automatically generated
 generate_feeds = true
 
+feed_filenames = ["atom.xml", "rss.xml"]
+
 # The default author for pages
 author = "wiser"
 
@@ -67,7 +69,7 @@ menu = [
 ]
 
 socials = [
-    # { name = "rss", url = "https://wiserfz.github.io/atom.xml", icon = "rss" },
+    { name = "rss", url = "https://wiserfz.github.io/rss.xml", icon = "rss" },
     { name = "email", url = "mailto:wiserfz810@gmail.com", icon = "email" },
     { name = "github", url = "https://github.com/wiserfz/", icon = "github" },
 ]
